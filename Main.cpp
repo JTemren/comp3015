@@ -101,7 +101,7 @@ int main()
 
 	int widthImg, hightImg, numColCh;
 	stbi_set_flip_vertically_on_load(true);
-	unsigned char* bytes = stbi_load("brick.png", &widthImg, &hightImg, &numColCh, 0);
+	unsigned char* bytes = stbi_load("Textures/brick.png", &widthImg, &hightImg, &numColCh, 0);
 
 	GLuint texture;
 	glGenTextures(1, &texture);
