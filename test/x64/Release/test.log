@@ -1,7 +1,8 @@
 ﻿  Main.cpp
-  Previous IPDB and IOBJ mismatch, fall back to full compilation.
 LINK : warning LNK4098: defaultlib 'MSVCRTD' conflicts with use of other libs; use /NODEFAULTLIB:library
   Generating code
-  All 399 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  1 of 403 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    7 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   test.vcxproj -> C:\Users\JTemren\Documents\GitHub\comp3015\x64\Release\test.exe

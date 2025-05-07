@@ -7,6 +7,7 @@
 #include<glm/gtc/type_ptr.hpp>
 
 #include"shaderClass.h"
+#include"Texture.h"
 #include"VAO.h"
 #include"VBO.h"
 #include"EBO.h"
@@ -99,30 +100,8 @@ int main()
 
 	// Texture
 
-	int widthImg, hightImg, numColCh;
-	stbi_set_flip_vertically_on_load(true);
-	unsigned char* bytes = stbi_load("Textures/brick.png", &widthImg, &hightImg, &numColCh, 0);
-
-	GLuint texture;
-	glGenTextures(1, &texture);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthImg, hightImg, 0, GL_RGBA, GL_UNSIGNED_BYTE, bytes);
-	glGenerateMipmap(GL_TEXTURE_2D);
-
-	stbi_image_free(bytes);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	GLuint tex0uni = glGetUniformLocation(shaderProgram.ID, "Tex0");
-	shaderProgram.Activate();
-	glUniform1i(tex0uni, 0);
+	Texture _texture("Textures/brick.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+	_texture.texUnit(shaderProgram, "tex0", 0);
 
 	float rotation = 0.0f;
 	double prevTime = glfwGetTime();
@@ -169,7 +148,8 @@ int main()
 
 
 		glUniform1f(uniID, 0.5f);
-		glBindTexture(GL_TEXTURE_2D, texture);
+		//glBindTexture(GL_TEXTURE_2D, texture);
+		_texture.Bind();
 
 		//binding the VAO so OpenGL knows to use it
 		VAO1.Bind();
@@ -188,7 +168,8 @@ int main()
 	VAO1.Delete();
 	VBO1.Delete();
 	EBO1.Delete();
-	glDeleteTextures(1, &texture);
+	//glDeleteTextures(1, &texture);
+	_texture.Delete();
 	shaderProgram.Delete();
 
 	//delete window before endinng the program
