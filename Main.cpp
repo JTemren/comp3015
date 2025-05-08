@@ -12,8 +12,10 @@
 #include"VBO.h"
 #include"EBO.h"
 
-const unsigned int width = 800;
-const unsigned int hight = 800;
+#include"Camera.h"
+
+const unsigned int _width = 800;
+const unsigned int _height = 800;
 
 //vertcies for triangle
 GLfloat vertices[] =
@@ -54,7 +56,7 @@ int main()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	//creating a simple window
-	GLFWwindow* window = glfwCreateWindow(width, hight, "COMP3015", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(_width, _height, "COMP3015", NULL, NULL);
 
 	//error checking the creation of thee GLFW window
 	if (window == NULL)
@@ -71,7 +73,7 @@ int main()
 	gladLoadGL();
 
 	//specify the viewpoint and size of the window
-	glViewport(0, 0, width, hight);
+	glViewport(0, 0, _width, _height);
 
 
 	// Generates Shader object using shaders defualt.vert and default.frag
@@ -96,7 +98,7 @@ int main()
 	EBO1.Unbind();
 
 	// Gets ID the scale uniform
-	GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale");
+	//GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale");
 
 	// Texture
 
@@ -107,6 +109,11 @@ int main()
 	double prevTime = glfwGetTime();
 
 	glEnable(GL_DEPTH_TEST);
+
+
+
+	Camera camera(_width, _height, glm::vec3(0.0f, 0.0f, 2.0f));
+
 
 
 	//Main while loop
@@ -120,7 +127,12 @@ int main()
 		//assigning the correct shader program to use
 		shaderProgram.Activate();
 
-		glfwSwapInterval(1);
+		camera.Inputs(window);
+		camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram, "camMatrix");
+
+
+
+		//glfwSwapInterval(1);
 
 		double crntTime = glfwGetTime();
 		if (crntTime - prevTime >= 1 / 60) {
@@ -135,7 +147,7 @@ int main()
 		model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
 
 		view = glm::translate(view, glm::vec3(0.0f, -0.5f, -2.0f));
-		proj = glm::perspective(glm::radians(45.0f), (float)(width / hight), 0.1f, 100.0f);
+		proj = glm::perspective(glm::radians(45.0f), (float)(_width / _height), 0.1f, 100.0f);
 
 		int modelloc = glGetUniformLocation(shaderProgram.ID,"model");
 		glUniformMatrix4fv(modelloc, 1, GL_FALSE, glm::value_ptr(model));
@@ -147,15 +159,23 @@ int main()
 		glUniformMatrix4fv(projloc, 1, GL_FALSE, glm::value_ptr(proj));
 
 
-		glUniform1f(uniID, 0.5f);
+		//glUniform1f(uniID, 0.5f);
+
+
+
+
+
+
 		//glBindTexture(GL_TEXTURE_2D, texture);
 		_texture.Bind();
 
 		//binding the VAO so OpenGL knows to use it
 		VAO1.Bind();
+
 		//draw the triangle using GL_TRIANGLES primitive
 		//							 6 FOR SQARE, 9 FOR TRIFORCE
 		glDrawElements(GL_TRIANGLES, sizeof(indices)/sizeof(int), GL_UNSIGNED_INT, 0);
+
 		//swap the back and front buffer
 		glfwSwapBuffers(window);
 
@@ -168,12 +188,12 @@ int main()
 	VAO1.Delete();
 	VBO1.Delete();
 	EBO1.Delete();
-	//glDeleteTextures(1, &texture);
 	_texture.Delete();
 	shaderProgram.Delete();
 
 	//delete window before endinng the program
 	glfwDestroyWindow(window);
+
 	//terminate GLFW before the program ends
 	glfwTerminate();
 

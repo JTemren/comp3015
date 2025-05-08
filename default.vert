@@ -7,16 +7,18 @@ out vec3 colour;
 
 out vec2 texCoord;
 
-uniform float scale;
+//uniform float scale;
 
-uniform mat4 model;
-uniform mat4 view;
-uniform mat4 proj;
+//uniform mat4 model;
+//uniform mat4 view;
+//uniform mat4 proj;
+
+uniform mat4 camMatrix;
 
 void main()
 {
-   gl_Position = vec4(aPos.x + aPos.x * scale, aPos.y + aPos.y * scale, aPos.z + aPos.z * scale, 1.0);
-   gl_Position = proj * view * model * vec4(aPos, 1.0);
+   //gl_Position = proj * view * model * vec4(aPos, 1.0);
+   gl_Position = camMatrix * vec4(aPos, 1.0);
    colour = aColour;
    texCoord = aTex;
 }
