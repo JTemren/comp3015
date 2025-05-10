@@ -71,11 +71,11 @@
     <None Include="Light.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="Models\scene.gltf">
-      <Filter>Models</Filter>
+    <None Include="outlining.vert">
+      <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="Models\scene.bin">
-      <Filter>Models</Filter>
+    <None Include="outlining.frag">
+      <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -103,10 +103,5 @@
     <ClInclude Include="Model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Models\Textures\Object001_mtl_baseColor.jpeg">
-      <Filter>Models\Textures</Filter>
-    </Image>
   </ItemGroup>
 </Project>

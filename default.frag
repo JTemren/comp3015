@@ -101,6 +101,14 @@ vec4 spotLight()
 
 	return (texture(diffuse0, texCoord) * (diffuse * inten + ambient) + texture(specular0, texCoord).r * specular * inten) * lightColor;
 }
+float near = 0.1f;
+float far = 100.0f;
+
+float LinearizeDepth(float depth) 
+{
+    float z = depth * 2.0 - 1.0; // back to NDC 
+    return (2.0 * near * far) / (far + near - z * (far - near));	
+}
 
 
 void main()
@@ -110,4 +118,6 @@ void main()
 	//FragColor = spotLight();
 	FragColor = direcLight();
 	//FragColor = pointLight();
+	float depth = LinearizeDepth(gl_FragCoord.z) / far; // divide by far for demonstration
+    //FragColor = vec4(vec3(depth), 1.0), direcLight();
 }
