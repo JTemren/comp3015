@@ -118,6 +118,6 @@ void main()
 	//FragColor = spotLight();
 	FragColor = direcLight();
 	//FragColor = pointLight();
-	float depth = LinearizeDepth(gl_FragCoord.z) / far; // divide by far for demonstration
+	float depth = LinearizeDepth(gl_FragCoord.z) / far; 
     //FragColor = vec4(vec3(depth), 1.0), direcLight();
 }
