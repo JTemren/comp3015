@@ -19,7 +19,7 @@ int main()
 	// So that means we only have the modern functions
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	// Create a GLFWwindow object of 800 by 800 pixels, naming it "YoutubeOpenGL"
+	// Create a GLFWwindow object of 800 by 800 pixels
 	GLFWwindow* window = glfwCreateWindow(width, height, "Test", NULL, NULL);
 
 	// Error check if the window fails to create
